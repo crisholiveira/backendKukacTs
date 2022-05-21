@@ -1,0 +1,1 @@
+{"tipoVeiculo":"1","modelo":"Fusca","qtdPassageiros":"2"}{"tipoVeiculo":"1","modelo":"Honda","qtdPassageiros":"2"}

@@ -1,11 +1,11 @@
-import express, {Request, Response} from "express"
-import bodyParser from "body-parser"
+import express, { Request, Response } from "express"
+
 
 const app = express()
 
 
 app.use(express.json())
-app.use(bodyParser.json())
+
 
 import DesafioRouter from './routes/DesafioRoutes'
 

@@ -96,12 +96,11 @@ export function garagem(req: Request, res: Response) {
         }
     }
 
-    let veiculo = new Veiculo()
-
-
-
     
 
+    let veiculo = new Veiculo()  
+
+    
 
     try {
         if (tipoVeiculo == 1) {
@@ -114,9 +113,16 @@ export function garagem(req: Request, res: Response) {
                     this.qtdPassageiros = req.body.qtdPassageiros
                 }
             }
+            
 
             let moto = new Moto()
-            
+            let cadastro = JSON.stringify(req.body)
+            fs.appendFile("cadastromoto.txt", cadastro, function(err) {
+                if(err) {
+                    return (err);
+                } else {
+                    return ("Cadastro gravado com sucesso");        }
+            })
             res.status(200).json({ moto })
         }
 
@@ -130,9 +136,16 @@ export function garagem(req: Request, res: Response) {
             }
 
             let carro = new Carro()
+            let cadastro = JSON.stringify(req.body)
+            fs.appendFile("cadastrocarro.txt", cadastro, function(err) {
+                if(err) {
+                    return (err);
+                } else {
+                    return ("Cadastro gravado com sucesso");        }
+            })
             res.status(200).json({ carro })
-
         }
+
 
     } catch (error) {
         res.status(500).json({ message: error })
