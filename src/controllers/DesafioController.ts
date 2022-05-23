@@ -3,32 +3,30 @@ import { Request, Response } from "express"
 import fs from "fs"
 
 
+
 export function palindromos(req: Request, res: Response) {
 
-    const numInicial = req.body.numInicial
-    const numFinal = req.body.numFinal
-
-    if (numFinal < numInicial) {
-        res.status(422).json({ message: "O número final precisa ser maior que o número incial" })
-        return
-    }
-
+    let {numInicial, numFinal} = req.body
+    let palindromo = []      
+    
     if (!numInicial) {
         res.status(422).json({ message: "O número incial da sequência é obrigatório" })
         return
     }
 
-    if (!numFinal) {
-        res.status(422).json({ message: "O número final da sequência é obrigatório" })
+    if (numFinal < numInicial || !numFinal) {
+        res.status(422).json({ message: "O número final deve ser maior que o número incial" })
         return
     }
-
-    let palindromo = []
-    for (let j = numInicial; j <= numFinal; j++) {
-        if (j.toString() == j.toString().split("").reverse().join("")) {
-            palindromo.push([j])
-        }
-    }
+    
+   
+        for (let j = numInicial; j <= numFinal; j++) {
+            if (j.toString() == j.toString().split("").reverse().join("")) {
+                palindromo.push([j])
+            }
+        }     
+        
+   
 
     try {
 
@@ -91,14 +89,22 @@ export function garagem(req: Request, res: Response) {
         modelo: string;
         anoFabricacao: number;
         constructor(modelo: string, anoFabricacao: number) {
-            this.modelo = req.body.modelo
-            this.anoFabricacao = req.body.anoFabricacao
+            this.modelo = modelo
+            this.anoFabricacao = anoFabricacao
         }
     }
 
     
 
-    let veiculo = new Veiculo()  
+    let veiculo = new Veiculo(req.body.modelo, req.body.anoFabricacao) 
+    if(!veiculo.modelo) {
+        res.status(422).json({ message: "O modelo é obrigatório" })
+        return
+    }
+    if(!veiculo.anoFabricacao) {
+        res.status(422).json({ message: "O ano de fabricação é obrigatório" })
+        return
+    }
 
     
 
@@ -115,8 +121,16 @@ export function garagem(req: Request, res: Response) {
             }
             
 
-            let moto = new Moto()
+            let moto = new Moto(req.body.modelo, req.body.anoFabricacao, req.body.qtdRodas, req.body.qtdPassageiros)
             let cadastro = JSON.stringify(req.body)
+            if(!moto.qtdRodas) {
+                res.status(422).json({ message: "A quantidade de rodas é obrigatória" })
+                return
+            }
+            if(!moto.qtdPassageiros) {
+                res.status(422).json({ message: "A quantidade de passageiros é obrigatória" })
+                return
+            }
             fs.appendFile("cadastromoto.txt", cadastro, function(err) {
                 if(err) {
                     return (err);
@@ -131,11 +145,15 @@ export function garagem(req: Request, res: Response) {
                 qtdPortas: number;
                 constructor(modelo: string, anoFabricacao: number, qtdPortas: number) {
                     super(modelo, anoFabricacao)
-                    this.qtdPortas = req.body.qtdPortas
+                    this.qtdPortas = qtdPortas
                 }
             }
 
-            let carro = new Carro()
+            let carro = new Carro(req.body.modelo, req.body.anoFabricacao,req.body.qtdPortas)
+            if(!carro.qtdPortas) {
+                res.status(422).json({ message: "A quantidade de portas é obrigatória" })
+                return
+            }
             let cadastro = JSON.stringify(req.body)
             fs.appendFile("cadastrocarro.txt", cadastro, function(err) {
                 if(err) {

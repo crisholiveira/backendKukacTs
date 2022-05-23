@@ -1,1 +1,1 @@
-{"tipoVeiculo":"1","modelo":"Fusca","qtdPassageiros":"2"}{"tipoVeiculo":"1","modelo":"Honda","qtdPassageiros":"2"}
+{"tipoVeiculo":"1","modelo":"Honda","anoFabricacao":"1968","qtdRodas":"3","qtdPassageiros":"2"}{"tipoVeiculo":"1","modelo":"Honda","anoFabricacao":"1968","qtdRodas":"3","qtdPassageiros":"2"}
